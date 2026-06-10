@@ -192,6 +192,17 @@ body{font-family:var(--ff);color:var(--ink);
   .hint{top:120px}
   .fab{left:12px;padding:12px 16px;font-size:12.5px}
 }
+/* 폰: 오른쪽 패널 → 하단 시트(반투명 X, 화면 절반만 덮어 그래프가 위에 보이게) */
+@media(max-width:640px){
+  .panel{top:auto;bottom:0;left:0;right:0;width:100%;height:58vh;max-height:58vh;
+    border-left:0;border-top:1px solid var(--div);border-radius:20px 20px 0 0;
+    box-shadow:0 -14px 40px rgba(23,35,66,.22);transform:translateY(106%)}
+  .panel.open{transform:none}
+  .panel::before{content:'';position:absolute;top:8px;left:50%;transform:translateX(-50%);
+    width:42px;height:5px;border-radius:999px;background:#cbd5e0;z-index:2}
+  .p-head{padding-top:20px}
+  .legend{max-width:74vw}
+}
 </style>
 </head>
 <body>
@@ -451,6 +462,7 @@ function resize(){
   const hn=document.getElementById('hint'); if(hn) hn.style.top=(HEADER+6)+'px';
   const fab=document.querySelector('.fab'); if(fab) fab.style.top=(HEADER+6)+'px';
   layoutAnchors();
+  if(selected) computeFocus(selected.s);
 }
 function layoutAnchors(){
   const cx=W/2, cy=(H+HEADER)/2, rx=Math.min(W*0.36,560), ry=Math.min((H-HEADER)*0.36,360); anchors={};
@@ -491,8 +503,11 @@ function activeEdges(){
 }
 
 /* ===================== FOCUS LAYOUT ===================== */
+function isPhone(){ return window.innerWidth<=640; }
+function focusCY(){ return (isPhone()&&selected)? HEADER + (H*0.42 - HEADER)/2 : (H+HEADER)/2; }
+function bottomBound(){ return (isPhone()&&selected)? Math.round(H*0.42)-R : H-R-30; }
 function computeFocus(me){
-  focusMap={}; const cx=W/2, cy=(H+HEADER)/2;
+  focusMap={}; const cx=W/2, cy=focusCY();
   const givers=giversFor(me), receivers=receiversFor(me);
   const rid=new Set(receivers.map(o=>o.p.id));
   const mutual=givers.filter(o=>rid.has(o.p.id)).map(o=>o.p.id); const mset=new Set(mutual);
@@ -507,12 +522,12 @@ function placeArc(ids, base, role, cx, cy){
   const Rr=Math.min(Math.max(210, L*22), Math.max(170,avail));
   const span=Math.min(2.5, 0.5 + L*0.13);
   ids.forEach((id,i)=>{ const ang=base + (L>1? (i/(L-1)-0.5)*span : 0);
-    let x=cx+Math.cos(ang)*Rr, y=cy+Math.sin(ang)*Rr; y=Math.max(HEADER+R+34, Math.min(H-R-30, y)); focusMap[id]={x,y,role}; });
+    let x=cx+Math.cos(ang)*Rr, y=cy+Math.sin(ang)*Rr; y=Math.max(HEADER+R+34, Math.min(bottomBound(), y)); focusMap[id]={x,y,role}; });
 }
 function placeMutual(ids, cx, cy){
   const M=ids.length; if(!M) return;
   ids.forEach((id,i)=>{ const top=i%2===0, row=Math.floor(i/2);
-    let y=cy+(top?-1:1)*(R*3.2+row*72); y=Math.max(HEADER+R+34, Math.min(H-R-30, y)); focusMap[id]={x:cx+(top?-30:30), y, role:'mutual'}; });
+    let y=cy+(top?-1:1)*(R*3.2+row*72); y=Math.max(HEADER+R+34, Math.min(bottomBound(), y)); focusMap[id]={x:cx+(top?-30:30), y, role:'mutual'}; });
 }
 
 /* ===================== DRAW ===================== */
