@@ -522,8 +522,10 @@ function activeEdges(){
 
 /* ===================== FOCUS LAYOUT ===================== */
 function isPhone(){ return window.innerWidth<=640; }
-function focusCY(){ return (H+HEADER)/2; }        /* 그래프는 항상 중앙에 온전히 */
-function bottomBound(){ return H-R-30; }
+function visBottom(){ return isPhone()? H*0.52 : H; }                 /* 폰: 하단 시트 위 영역만 사용 */
+function focusCY(){ return isPhone()? (HEADER+visBottom())/2 : (H+HEADER)/2; }
+function bottomBound(){ return isPhone()? visBottom()-R-8 : H-R-30; }
+function focusMaxR(){ return isPhone()? Math.max(80,(visBottom()-HEADER)/2 - R - 8) : 99999; }
 function computeFocus(me){
   focusMap={}; const cx=W/2, cy=focusCY();
   const givers=giversFor(me), receivers=receiversFor(me);
@@ -537,7 +539,7 @@ function computeFocus(me){
 function placeArc(ids, base, role, cx, cy){
   const L=ids.length; if(!L) return;
   const avail=(role==='recv'? cx : (W-cx)) - 80;
-  const Rr=Math.min(Math.max(210, L*22), Math.max(170,avail));
+  const Rr=Math.min(Math.max(210, L*22), Math.max(170,avail), focusMaxR());
   const span=Math.min(2.5, 0.5 + L*0.13);
   ids.forEach((id,i)=>{ const ang=base + (L>1? (i/(L-1)-0.5)*span : 0);
     let x=cx+Math.cos(ang)*Rr, y=cy+Math.sin(ang)*Rr; y=Math.max(HEADER+R+34, Math.min(bottomBound(), y)); focusMap[id]={x,y,role}; });
