@@ -192,15 +192,33 @@ body{font-family:var(--ff);color:var(--ink);
   .hint{top:120px}
   .fab{left:12px;padding:12px 16px;font-size:12.5px}
 }
-/* 폰: 오른쪽 패널 → 하단 시트(반투명 X, 화면 절반만 덮어 그래프가 위에 보이게) */
+.swipe-hint{display:none}
+/* 폰: 오른쪽 패널 → 짧은 반투명 하단 시트 (그래프가 중앙에 온전히 보이게) */
 @media(max-width:640px){
-  .panel{top:auto;bottom:0;left:0;right:0;width:100%;height:58vh;max-height:58vh;
-    border-left:0;border-top:1px solid var(--div);border-radius:20px 20px 0 0;
-    box-shadow:0 -14px 40px rgba(23,35,66,.22);transform:translateY(106%)}
+  .panel{top:auto;bottom:0;left:0;right:0;width:100%;height:auto;max-height:46vh;
+    background:rgba(255,255,255,.82);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+    border-left:0;border-top:1px solid rgba(255,255,255,.6);border-radius:20px 20px 0 0;
+    box-shadow:0 -12px 36px rgba(23,35,66,.20);transform:translateY(106%)}
   .panel.open{transform:none}
   .panel::before{content:'';position:absolute;top:8px;left:50%;transform:translateX(-50%);
-    width:42px;height:5px;border-radius:999px;background:#cbd5e0;z-index:2}
-  .p-head{padding-top:20px}
+    width:42px;height:5px;border-radius:999px;background:#c2cdda;z-index:2}
+  .p-head{padding:18px 16px 8px}
+  .p-name{font-size:18px}.p-name .av{font-size:21px}
+  .p-body{padding:2px 14px 14px}
+  .p-givewant{display:flex;gap:10px}
+  .p-givewant .p-block{flex:1;min-width:0;margin-top:10px}
+  .p-givewant .lbl{font-size:10px}
+  .p-givewant .quote{font-size:11px;padding:7px 9px;line-height:1.5;
+    display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+  .match-sec{margin-top:13px}
+  .match-sec>.sh{font-size:12px}
+  .swipe-hint{display:inline;font-size:10px;font-weight:700;color:var(--steel);margin-left:auto}
+  .match-sec>.sh{display:flex;align-items:center;width:100%}
+  .mrow{display:flex;gap:8px;overflow-x:auto;-webkit-overflow-scrolling:touch;scroll-snap-type:x mandatory;padding-bottom:4px}
+  .mrow .mcard{flex:0 0 82%;margin-bottom:0;scroll-snap-align:start;background:rgba(255,255,255,.96)}
+  .mrow .mcard .mq{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .mrow .empty{flex:1}
+  .warm{margin-top:13px;padding:10px 12px;font-size:11.5px}
   .legend{max-width:74vw}
 }
 </style>
@@ -504,8 +522,8 @@ function activeEdges(){
 
 /* ===================== FOCUS LAYOUT ===================== */
 function isPhone(){ return window.innerWidth<=640; }
-function focusCY(){ return (isPhone()&&selected)? HEADER + (H*0.42 - HEADER)/2 : (H+HEADER)/2; }
-function bottomBound(){ return (isPhone()&&selected)? Math.round(H*0.42)-R : H-R-30; }
+function focusCY(){ return (H+HEADER)/2; }        /* 그래프는 항상 중앙에 온전히 */
+function bottomBound(){ return H-R-30; }
 function computeFocus(me){
   focusMap={}; const cx=W/2, cy=focusCY();
   const givers=giversFor(me), receivers=receiversFor(me);
@@ -661,16 +679,18 @@ function renderPanel(me){
     return `<div class="mcard" onclick="selectById(${o.p.id})"><div class="mtop"><span class="me">${o.p.emoji}</span>${esc(o.p.name)}</div>
       <div class="mchips">${chipHTML(o.cats)}</div><div class="mq">${kind==='in'?'💬 ':'🙏 '}${esc(q)}</div></div>`; };
   document.getElementById('pBody').innerHTML=`
-    <div class="p-block"><div class="lbl give">🎁 내가 나눌 수 있어요</div>
-      <div class="chips">${me.give.length?chipHTML(me.give):'<span class="chip" style="background:#b5bdc7">아직 없음</span>'}</div>
-      <div class="quote">${esc(me.giveText)||'편하게 연락 주세요 :)'}</div></div>
-    <div class="p-block"><div class="lbl want">🌧 내가 받고 싶어요</div>
-      <div class="chips">${me.want.length?chipHTML(me.want):'<span class="chip" style="background:#b5bdc7">아직 고르는 중</span>'}</div>
-      <div class="quote">${esc(me.wantText)||'함께 나눠요.'}</div></div>
-    <div class="match-sec"><div class="sh">💝 내가 받고 싶은 걸 줄 수 있는 친구 <span class="cnt">${givers.length}</span></div>
-      ${givers.length? givers.map(o=>card(o,'in')).join('') : '<div class="empty">받고 싶은 항목을 고르면, 그걸 나눠줄 친구가 여기에 떠요. 🌱</div>'}</div>
-    <div class="match-sec"><div class="sh">🤝 내가 힘이 되어줄 수 있는 친구 <span class="cnt">${receivers.length}</span></div>
-      ${receivers.length? receivers.map(o=>card(o,'out')).join('') : '<div class="empty">아직은 없지만, 너의 존재만으로도 충분해요. 💛</div>'}</div>
+    <div class="p-givewant">
+      <div class="p-block"><div class="lbl give">🎁 내가 나눌 수 있어요</div>
+        <div class="chips">${me.give.length?chipHTML(me.give):'<span class="chip" style="background:#b5bdc7">아직 없음</span>'}</div>
+        <div class="quote">${esc(me.giveText)||'편하게 연락 주세요 :)'}</div></div>
+      <div class="p-block"><div class="lbl want">🌧 내가 받고 싶어요</div>
+        <div class="chips">${me.want.length?chipHTML(me.want):'<span class="chip" style="background:#b5bdc7">아직 고르는 중</span>'}</div>
+        <div class="quote">${esc(me.wantText)||'함께 나눠요.'}</div></div>
+    </div>
+    <div class="match-sec"><div class="sh">💝 내가 받고 싶은 걸 줄 수 있는 친구 <span class="cnt">${givers.length}</span> <span class="swipe-hint">← 옆으로 넘겨보세요</span></div>
+      <div class="mrow">${givers.length? givers.map(o=>card(o,'in')).join('') : '<div class="empty">받고 싶은 항목을 고르면, 그걸 나눠줄 친구가 여기에 떠요. 🌱</div>'}</div></div>
+    <div class="match-sec"><div class="sh">🤝 내가 힘이 되어줄 수 있는 친구 <span class="cnt">${receivers.length}</span> <span class="swipe-hint">← 옆으로 넘겨보세요</span></div>
+      <div class="mrow">${receivers.length? receivers.map(o=>card(o,'out')).join('') : '<div class="empty">아직은 없지만, 너의 존재만으로도 충분해요. 💛</div>'}</div></div>
     <div class="warm"><b>따뜻한 한마디</b><br>${warm}</div>
     ${adminMode ? `<div style="display:flex;gap:8px;margin-top:16px">
        <button class="p-edit" style="flex:1;width:auto" onclick="adminEdit()">✏️ 수정</button>
