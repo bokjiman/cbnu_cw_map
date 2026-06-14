@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>🕸 충북대학교 아동복지학과 우리과 자원망 — 우리는 서로의 자원입니다</title>
+<style>
+/* ===== Freesentation webfont ===== */
+@font-face{font-family:'Freesentation';font-weight:400;font-style:normal;font-display:swap;src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-4Regular.woff2') format('woff2')}
+@font-face{font-family:'Freesentation';font-weight:500;font-style:normal;font-display:swap;src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-5Medium.woff2') format('woff2')}
+@font-face{font-family:'Freesentation';font-weight:600;font-style:normal;font-display:swap;src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-6SemiBold.woff2') format('woff2')}
+@font-face{font-family:'Freesentation';font-weight:700;font-style:normal;font-display:swap;src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-7Bold.woff2') format('woff2')}
+@font-face{font-family:'Freesentation';font-weight:800;font-style:normal;font-display:swap;src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-8ExtraBold.woff2') format('woff2')}
+@font-face{font-family:'Freesentation';font-weight:900;font-style:normal;font-display:swap;src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-9Black.woff2') format('woff2')}
+
+:root{
+  --navy:#172342;--navy2:#24375f;--ink:#1A202C;--slate:#4A5568;--steel:#8a93a0;
+  --div:#E2E8F0;--off:#F4F7FB;--card:#ffffff;--sky:#5B9BD5;
+  --c-학습:#3b82f6;--c-발표:#f59e0b;--c-자료정리:#10b981;--c-멘탈케어:#ec4899;
+  --c-취미기타:#8b5cf6;--c-진로취업:#14b8a6;--c-밥일상:#f97316;--c-꿀팁정보:#ef4444;
+  --ff:'Freesentation','Noto Sans KR',sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;overflow:hidden}
+body{font-family:var(--ff);color:var(--ink);
+  background:radial-gradient(120% 120% at 50% 0%,#fdfcff 0%,#eef3fb 55%,#e7eef9 100%)}
+
+/* ===== header ===== */
+.top{position:fixed;left:0;right:0;top:0;z-index:40;display:flex;align-items:center;gap:8px;flex-wrap:nowrap;
+  overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;
+  padding:9px 16px;background:linear-gradient(135deg,rgba(23,35,66,.96),rgba(36,55,95,.96));
+  color:#fff;box-shadow:0 4px 22px rgba(23,35,66,.28);backdrop-filter:blur(6px)}
+.top::-webkit-scrollbar{display:none}
+.top>.brand,.top>.cnt-pill,.top>.pickwrap,.top>.tbtn{flex-shrink:0}
+.top .brand{display:flex;flex-direction:column;line-height:1.22;margin-right:4px}
+.top .brand small{font-size:10.5px;opacity:.74;font-weight:500}
+.top .brand h1{font-size:15.5px;font-weight:900;letter-spacing:-.2px}
+.top .spacer{flex:1 1 12px}
+.cnt-pill{display:inline-flex;align-items:center;gap:5px;background:rgba(255,255,255,.14);
+  border:1px solid rgba(255,255,255,.22);border-radius:999px;padding:5px 11px;font-size:11.5px;font-weight:800;white-space:nowrap}
+.cnt-pill b{color:#ffd479}
+.pickwrap{position:relative;display:flex;align-items:center;gap:6px;
+  background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.22);border-radius:11px;padding:4px 8px}
+.pickwrap label{font-size:11px;font-weight:800;opacity:.85;white-space:nowrap}
+.pickwrap select{appearance:none;border:0;background:#fff;color:var(--navy);font-family:var(--ff);
+  font-weight:800;font-size:12px;border-radius:8px;padding:6px 28px 6px 10px;cursor:pointer;min-width:106px;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23172342' stroke-width='3'><path d='M6 9l6 6 6-6'/></svg>");
+  background-repeat:no-repeat;background-position:right 8px center}
+.tbtn{border:1px solid rgba(255,255,255,.24);background:rgba(255,255,255,.12);color:#fff;border-radius:10px;
+  padding:7px 11px;font-family:var(--ff);font-weight:800;font-size:11.5px;cursor:pointer;white-space:nowrap;transition:.15s}
+.tbtn:hover{background:#fff;color:var(--navy)}
+.tbtn.on{background:#ffd479;border-color:#ffd479;color:#3a2c00}
+/* prominent add button in header */
+.tbtn.add{background:linear-gradient(135deg,#ffd479,#ffb52e);border-color:#ffd479;color:#3a2c00;font-weight:900;font-size:12.5px;
+  padding:8px 14px;box-shadow:0 3px 12px rgba(255,181,46,.5)}
+.tbtn.add:hover{background:#fff;color:#b26a00}
+
+/* ===== floating add button (FAB) ===== */
+.fab{position:fixed;left:16px;top:88px;z-index:55;border:0;cursor:pointer;
+  background:linear-gradient(135deg,#5B9BD5,#2C5F8A);color:#fff;font-family:var(--ff);font-weight:900;font-size:14.5px;
+  padding:15px 22px;border-radius:999px;box-shadow:0 10px 30px rgba(44,95,138,.5);
+  display:flex;align-items:center;gap:8px;animation:fabpulse 2.4s ease-in-out infinite}
+.fab:hover{transform:translateY(-2px);box-shadow:0 14px 36px rgba(44,95,138,.6)}
+.fab .plus{font-size:19px;line-height:1}
+@keyframes fabpulse{0%,100%{box-shadow:0 10px 30px rgba(44,95,138,.45)}50%{box-shadow:0 10px 30px rgba(44,95,138,.45),0 0 0 12px rgba(91,155,213,.12)}}
+
+/* ===== canvas ===== */
+#net{position:fixed;inset:0;z-index:1;touch-action:none;display:block}
+
+/* ===== legend ===== */
+.legend{position:fixed;left:16px;bottom:16px;z-index:20;background:rgba(255,255,255,.92);
+  border:1px solid var(--div);border-radius:15px;padding:11px 13px;box-shadow:0 8px 26px rgba(23,35,66,.12);
+  max-width:min(44vw,400px);backdrop-filter:blur(4px)}
+.legend b{font-size:11.5px;color:var(--navy);font-weight:900}
+.leg-toggle{display:flex;align-items:center;justify-content:space-between;gap:8px;width:100%;background:none;border:0;
+  font-family:var(--ff);cursor:pointer;padding:0;color:var(--navy)}
+.leg-toggle #legcaret{font-size:12px;color:var(--steel)}
+.legbody{margin-top:7px}
+.legend.collapsed .legbody{display:none}
+.legchips{display:flex;flex-wrap:wrap;gap:5px}
+.legchip{display:inline-flex;align-items:center;gap:4px;font-size:10.5px;font-weight:800;color:#fff;
+  border-radius:999px;padding:3px 9px;cursor:pointer;opacity:.92;transition:.15s;user-select:none}
+.legchip:hover{transform:translateY(-1px)}
+.legchip.dim{opacity:.32}
+.legend .lh{margin-top:8px;font-size:10.5px;color:var(--slate);line-height:1.55}
+
+/* ===== hint pill ===== */
+.hint{position:fixed;left:50%;top:84px;transform:translateX(-50%);z-index:18;
+  background:rgba(23,35,66,.9);color:#fff;font-size:12px;font-weight:700;border-radius:999px;
+  padding:8px 16px;box-shadow:0 6px 20px rgba(23,35,66,.25);transition:.4s;pointer-events:none;text-align:center;max-width:90vw}
+.hint.hide{opacity:0;transform:translateX(-50%) translateY(-8px)}
+
+/* ===== detail panel ===== */
+.panel{position:fixed;top:0;right:0;height:100%;width:min(390px,90vw);z-index:30;
+  background:rgba(255,255,255,.97);border-left:1px solid var(--div);
+  box-shadow:-14px 0 40px rgba(23,35,66,.16);transform:translateX(105%);transition:transform .42s cubic-bezier(.22,1,.36,1);
+  display:flex;flex-direction:column;backdrop-filter:blur(8px)}
+.panel.open{transform:none}
+.p-head{padding:18px 20px 14px;border-bottom:1px solid var(--div);position:relative;flex-shrink:0}
+.p-close{position:absolute;right:14px;top:14px;border:0;background:#eef2f8;color:var(--slate);
+  width:30px;height:30px;border-radius:9px;font-size:15px;cursor:pointer;font-weight:900}
+.p-close:hover{background:#e2e8f0}
+.p-name{display:flex;align-items:center;gap:9px;font-size:22px;font-weight:900;color:var(--navy)}
+.p-name .av{font-size:26px}
+.p-sub{font-size:11.5px;color:var(--steel);margin-top:3px;font-weight:600}
+.p-body{padding:6px 20px 26px;overflow-y:auto;flex:1}
+.p-block{margin-top:16px}
+.p-block .lbl{display:flex;align-items:center;gap:6px;font-size:11px;font-weight:900;letter-spacing:.3px;margin-bottom:7px}
+.p-block .lbl.give{color:#0e8a52}.p-block .lbl.want{color:#c2308a}
+.chips{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:6px}
+.chip{font-size:10.5px;font-weight:800;color:#fff;border-radius:999px;padding:3px 9px;white-space:nowrap}
+.quote{font-size:12px;color:var(--slate);line-height:1.6;background:#f6f8fc;border-radius:10px;padding:9px 11px;border-left:3px solid var(--div)}
+.match-sec{margin-top:20px}
+.match-sec>.sh{display:flex;align-items:center;gap:7px;font-size:12.5px;font-weight:900;color:var(--navy);margin-bottom:9px}
+.match-sec>.sh .cnt{font-size:11px;font-weight:900;color:#fff;background:var(--navy);border-radius:999px;padding:1px 8px}
+.mcard{border:1px solid var(--div);border-radius:13px;padding:10px 12px;margin-bottom:8px;cursor:pointer;background:#fff;transition:.15s}
+.mcard:hover{border-color:#b9c6da;box-shadow:0 4px 14px rgba(23,35,66,.08);transform:translateY(-1px)}
+.mcard .mtop{display:flex;align-items:center;gap:7px;font-size:13.5px;font-weight:900;color:var(--ink)}
+.mcard .mtop .me{font-size:16px}
+.mcard .mq{font-size:11px;color:var(--slate);line-height:1.5;margin-top:5px}
+.mcard .mchips{display:flex;flex-wrap:wrap;gap:4px;margin-top:7px}
+.empty{font-size:12px;color:var(--steel);background:#f6f8fc;border-radius:10px;padding:10px 12px;line-height:1.6}
+.warm{margin-top:22px;background:linear-gradient(135deg,#fff5f9,#fef6ec);border:1px solid #fbe3ee;border-radius:14px;padding:13px 15px;font-size:12.5px;line-height:1.7;color:#7a3b57;font-weight:600}
+.warm b{color:#d6478f}
+.p-del{margin-top:18px;width:100%;border:1px solid #f0c9c9;background:#fff5f5;color:#c0392b;border-radius:10px;padding:9px;font-family:var(--ff);font-weight:800;font-size:11.5px;cursor:pointer}
+.p-del:hover{background:#fdecec}
+.p-edit{border:1px solid #bcd6f0;background:#eef5fd;color:#2563eb;border-radius:10px;padding:9px;font-family:var(--ff);font-weight:800;font-size:11.5px;cursor:pointer}
+.p-edit:hover{background:#e0eefb}
+.cmt-sec{margin-top:18px;border-top:1px solid var(--div);padding-top:14px}
+.cmt-h{font-size:12.5px;font-weight:900;color:var(--navy);margin-bottom:9px;display:flex;align-items:center;gap:7px}
+.cmt-h .cnt{font-size:11px;font-weight:900;color:#fff;background:var(--navy);border-radius:999px;padding:1px 8px}
+.cmt{background:#f6f8fc;border-radius:10px;padding:8px 11px;margin-bottom:7px}
+.cmt-top{display:flex;align-items:center;justify-content:space-between}
+.cmt-top b{font-size:11.5px;font-weight:900;color:var(--navy)}
+.cmt-del{border:0;background:transparent;color:#c2cad4;font-size:13px;cursor:pointer;font-weight:900;padding:0 2px}
+.cmt-del:hover{color:#e74c3c}
+.cmt-txt{font-size:12px;color:#3d3d3d;line-height:1.5;margin-top:3px;word-break:break-word}
+.cmt-empty{font-size:11.5px;color:var(--steel);background:#f6f8fc;border-radius:10px;padding:10px 12px;line-height:1.5}
+.cmt-form{display:flex;gap:6px;margin-top:9px}
+.cmt-in{border:1.5px solid var(--div);border-radius:9px;padding:8px 10px;font-family:var(--ff);font-size:12px;color:var(--ink)}
+.cmt-in:focus{outline:none;border-color:var(--sky)}
+.cmt-in.cmt-name{flex:0 0 80px;min-width:0}
+.cmt-in.cmt-msg{flex:1;min-width:0}
+.cmt-btn{flex-shrink:0;border:0;background:var(--sky);color:#06203a;border-radius:9px;padding:8px 13px;font-family:var(--ff);font-weight:900;font-size:12px;cursor:pointer}
+.cmt-btn:hover{background:#4a8bc7}
+
+/* ===== modal system ===== */
+.back{position:fixed;inset:0;background:rgba(23,35,66,.36);z-index:80;display:none;backdrop-filter:blur(2px)}
+.back.open{display:block}
+.sheet{position:fixed;left:50%;top:50%;transform:translate(-50%,-48%) scale(.97);opacity:0;z-index:90;
+  width:min(520px,95vw);max-height:92vh;overflow-y:auto;background:#fff;border-radius:20px;
+  box-shadow:0 30px 70px rgba(23,35,66,.4);transition:.26s;pointer-events:none}
+.sheet.open{transform:translate(-50%,-50%) scale(1);opacity:1;pointer-events:auto}
+.m-head{padding:18px 22px 6px;position:relative}
+.m-head h2{font-size:20px;font-weight:900;color:var(--navy)}
+.m-head p{font-size:12px;color:var(--slate);margin-top:5px;line-height:1.65}
+.m-x{position:absolute;right:16px;top:16px;border:0;background:#eef2f8;color:var(--slate);width:30px;height:30px;border-radius:9px;font-size:15px;cursor:pointer;font-weight:900}
+.m-x:hover{background:#e2e8f0}
+.m-body{padding:8px 22px 4px}
+.field{margin-top:14px}
+.field>.fl{font-size:12px;font-weight:900;color:var(--navy);margin-bottom:7px;display:flex;align-items:center;gap:6px}
+.field>.fl .tagg{font-size:10px;font-weight:800;color:#fff;border-radius:999px;padding:1px 8px}
+.tagg.give{background:#0e8a52}.tagg.want{background:#c2308a}
+.field input.ti{width:100%;border:1.5px solid var(--div);border-radius:11px;padding:10px 12px;font-family:var(--ff);font-size:13.5px;color:var(--ink);font-weight:600}
+.field input.ti:focus{outline:none;border-color:var(--sky);background:#f8fbff}
+.emos{display:flex;flex-wrap:wrap;gap:6px}
+.emo{border:1.5px solid var(--div);background:#fff;border-radius:10px;width:38px;height:38px;font-size:18px;cursor:pointer;transition:.12s}
+.emo.on{border-color:var(--navy);background:#eef3fb;box-shadow:0 0 0 2px rgba(23,35,66,.12)}
+.fchips{display:flex;flex-wrap:wrap;gap:6px}
+.fchip{border:1.5px solid var(--div);background:#fff;color:#475569;border-radius:999px;padding:6px 11px;font-family:var(--ff);font-size:12px;font-weight:800;cursor:pointer;transition:.12s}
+.fchip.on{background:var(--cc);border-color:var(--cc);color:#fff}
+.subt{font-size:10.5px;color:var(--steel);margin-top:5px;line-height:1.55}
+.m-foot{padding:14px 22px 20px;display:flex;gap:8px;flex-wrap:wrap}
+.m-foot button{flex:1;min-width:96px;border:0;border-radius:12px;padding:12px;font-family:var(--ff);font-weight:900;font-size:13px;cursor:pointer}
+.m-cancel{background:#eef2f8;color:var(--slate)}
+.m-ok{background:var(--sky);color:#06203a}
+.m-ok:hover{background:#4a8bc7}
+
+/* raw editor */
+#rawArea{width:100%;height:46vh;min-height:240px;border:1.5px solid var(--div);border-radius:12px;padding:12px;
+  font-family:ui-monospace,'SFMono-Regular',Menlo,Consolas,monospace;font-size:12px;line-height:1.55;color:#1f2937;
+  background:#f8fafc;resize:vertical;white-space:pre}
+#rawArea.editing{background:#fff;border-color:var(--sky);box-shadow:0 0 0 3px rgba(91,155,213,.16)}
+.rawmode{font-size:11px;font-weight:800;padding:3px 9px;border-radius:999px}
+.rawmode.view{background:#eef2f8;color:var(--slate)}
+.rawmode.edit{background:#dcfce7;color:#15803d}
+
+/* log */
+.logbox{font-size:12px;color:var(--slate);line-height:1.6}
+.logmeta{background:#f4f8fc;border:1px solid var(--div);border-radius:12px;padding:12px 14px;margin-bottom:12px}
+.logmeta .vv{font-weight:900;color:var(--navy);font-size:14px}
+.logmeta .mm{font-size:11.5px;color:var(--slate);margin-top:4px}
+.logrow{display:flex;gap:10px;padding:7px 2px;border-bottom:1px dashed #e6ecf3}
+.logrow .lt{color:var(--steel);font-size:10.5px;white-space:nowrap;min-width:118px;font-weight:700}
+.logrow .la{color:var(--ink);font-weight:600}
+.help b{color:var(--navy)} .help ul{margin:8px 0 8px 18px} .help li{margin:5px 0;line-height:1.6;font-size:12.5px;color:var(--slate)}
+.help .k{font-weight:900;color:var(--navy)}
+
+/* ===== toast ===== */
+.toast{position:fixed;left:50%;bottom:96px;transform:translate(-50%,80px);z-index:120;background:var(--navy);
+  color:#fff;border-radius:12px;padding:11px 18px;font-size:12.5px;font-weight:800;
+  box-shadow:0 8px 26px rgba(0,0,0,.28);opacity:0;transition:.32s;max-width:90vw;text-align:center}
+.toast.show{transform:translate(-50%,0);opacity:1}
+
+@media(max-width:760px){
+  .top .brand h1{font-size:13px}.top .brand small{display:none}
+  .legend{max-width:60vw;bottom:12px;left:12px;padding:9px 10px}
+  .pickwrap label{display:none}
+  .hint{top:120px}
+  .fab{left:12px;padding:12px 16px;font-size:12.5px}
+}
+.swipe-hint{display:none}
+/* 폰: 오른쪽 패널 → 짧은 반투명 하단 시트 (그래프가 중앙에 온전히 보이게) */
+@media(max-width:640px){
+  .panel{top:auto;bottom:0;left:0;right:0;width:100%;height:auto;max-height:46vh;
+    background:rgba(255,255,255,.82);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+    border-left:0;border-top:1px solid rgba(255,255,255,.6);border-radius:20px 20px 0 0;
+    box-shadow:0 -12px 36px rgba(23,35,66,.20);transform:translateY(106%)}
+  .panel.open{transform:none}
+  .panel::before{content:'';position:absolute;top:8px;left:50%;transform:translateX(-50%);
+    width:42px;height:5px;border-radius:999px;background:#c2cdda;z-index:2}
+  .p-head{padding:18px 16px 8px}
+  .p-name{font-size:18px}.p-name .av{font-size:21px}
+  .p-body{padding:2px 14px 14px}
+  .p-givewant{display:flex;gap:10px}
+  .p-givewant .p-block{flex:1;min-width:0;margin-top:10px}
+  .p-givewant .lbl{font-size:10px}
+  .p-givewant .quote{font-size:11px;padding:7px 9px;line-height:1.5;
+    display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+  .match-sec{margin-top:13px}
+  .match-sec>.sh{font-size:12px}
+  .swipe-hint{display:inline;font-size:10px;font-weight:700;color:var(--steel);margin-left:auto}
+  .match-sec>.sh{display:flex;align-items:center;width:100%}
+  .mrow{display:flex;gap:8px;overflow-x:auto;-webkit-overflow-scrolling:touch;scroll-snap-type:x mandatory;padding-bottom:4px}
+  .mrow .mcard{flex:0 0 82%;margin-bottom:0;scroll-snap-align:start;background:rgba(255,255,255,.96)}
+  .mrow .mcard .mq{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .mrow .empty{flex:1}
+  .warm{margin-top:13px;padding:10px 12px;font-size:11.5px}
+  .legend{max-width:74vw}
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="brand"><small>충북대학교 아동복지학과 · 우리는 서로의 자원입니다</small>
+    <h1>🕸 우리과 자원망</h1></div>
+  <span class="cnt-pill">👥 참여 <b id="cnt">0</b>명</span>
+  <span class="cnt-pill" id="liveBadge" style="display:none;background:rgba(39,174,96,.25);border-color:rgba(39,174,96,.5)">🟢 실시간</span>
+  <button class="tbtn add" onclick="openAdd()">➕ 내 자원 카드 추가</button>
+  <div class="spacer"></div>
+  <div class="pickwrap"><label>나 찾기</label>
+    <select id="pick"><option value="">— 이름 선택 —</option></select></div>
+  <button class="tbtn" id="btnFloat" onclick="toggleFloat()">🫧 둥둥</button>
+  <button class="tbtn" id="btnFlow" onclick="toggleAllFlow()">⚡ 전체</button>
+  <button class="tbtn" onclick="deselect()">↺ 초기화</button>
+  <button class="tbtn" onclick="document.getElementById('imp').click()">📥 불러오기</button>
+  <button class="tbtn" onclick="exportJSON()">📤 내보내기</button>
+  <button class="tbtn" onclick="shareLink()">🔗 링크</button>
+  <button class="tbtn" onclick="openRaw()">🗂 Raw</button>
+  <button class="tbtn" onclick="openLog()">📜 로그</button>
+  <button class="tbtn" onclick="openHelp()">❓ 사용법</button>
+  <button class="tbtn" id="btnAdmin" onclick="toggleAdmin()">🔑 관리자</button>
+</header>
+
+<canvas id="net"></canvas>
+
+<button class="fab" onclick="openAdd()"><span class="plus">＋</span> 내 자원 카드 만들기</button>
+
+<div class="hint" id="hint">오른쪽 아래 <b>＋ 내 자원 카드 만들기</b>로 이름을 올려보세요 · 친구를 누르면 왼쪽=받음 / 오른쪽=줌 흐름이 펼쳐져요 ✨</div>
+
+<div class="legend" id="legend">
+  <button class="leg-toggle" onclick="toggleLegend()"><b>자원 카테고리 (누르면 강조)</b><span id="legcaret">▾</span></button>
+  <div class="legbody" id="legbody">
+    <div class="legchips" id="legchips"></div>
+    <div class="lh">같은 색 구역 = 그 자원을 <b>나눠줄 수 있는</b> 친구들의 모임이에요.</div>
+  </div>
+</div>
+
+<aside class="panel" id="panel">
+  <div class="p-head">
+    <button class="p-close" onclick="deselect()">✕</button>
+    <div class="p-name"><span class="av" id="pAv">🙂</span><span id="pName">이름</span></div>
+    <div class="p-sub" id="pSub"></div>
+  </div>
+  <div class="p-body" id="pBody"></div>
+</aside>
+
+<!-- backdrop -->
+<div class="back" id="back" onclick="closeModals()"></div>
+
+<!-- add-card modal -->
+<div class="sheet" id="addModal">
+  <div class="m-head"><button class="m-x" onclick="closeModals()">✕</button>
+    <h2 id="addTitle">➕ 내 자원 카드 만들기</h2>
+    <p>내가 <b>나눠줄 수 있는 것</b>과 <b>받고 싶은 것</b>을 한 줄로 적어 우리과 자원망에 올려요. 우리는 서로의 자원이니까요 💛</p></div>
+  <div class="m-body">
+    <div class="field"><div class="fl">이름 (또는 별명)</div>
+      <input class="ti" id="fName" maxlength="12" placeholder="예: 김복지" /></div>
+    <div class="field"><div class="fl">나를 닮은 이모지</div><div class="emos" id="fEmoji"></div></div>
+    <div class="field"><div class="fl"><span class="tagg give">GIVE</span> 내가 나눠줄 수 있어요</div>
+      <div class="fchips" id="fGiveCats"></div>
+      <input class="ti" id="fGiveText" maxlength="80" style="margin-top:8px" placeholder="한 줄로! 예: 시험 정리본 공유, 같이 밥 먹어요" /></div>
+    <div class="field"><div class="fl"><span class="tagg want">WANT</span> 내가 받고 싶어요</div>
+      <div class="fchips" id="fWantCats"></div>
+      <input class="ti" id="fWantText" maxlength="80" style="margin-top:8px" placeholder="한 줄로! 예: 발표 떨지 않는 법 알려주세요" />
+      <div class="subt">카테고리는 여러 개 골라도 돼요. (나눌 것·받을 것 중 하나 이상)</div></div>
+  </div>
+  <div class="m-foot">
+    <button class="m-cancel" onclick="closeModals()">취소</button>
+    <button class="m-ok" onclick="submitAdd()">자원망에 올리기 ✨</button>
+  </div>
+</div>
+
+<!-- raw data modal -->
+<div class="sheet" id="rawModal">
+  <div class="m-head"><button class="m-x" onclick="closeModals()">✕</button>
+    <h2>🗂 전체 참여자 Raw 데이터</h2>
+    <p>현재 명단의 원본 데이터(JSON)예요. <b>아래 칸을 누르면 직접 편집</b>할 수 있고, <b>적용</b>을 누르면 자원망에 바로 반영됩니다.
+      <span class="rawmode view" id="rawMode">읽기 전용 — 누르면 편집</span></p></div>
+  <div class="m-body"><textarea id="rawArea" readonly spellcheck="false" onclick="enableRawEdit()"></textarea></div>
+  <div class="m-foot">
+    <button class="m-cancel" onclick="copyRaw()">📋 복사</button>
+    <button class="m-cancel" onclick="exportJSON()">📤 파일로 저장</button>
+    <button class="m-ok" onclick="applyRaw()">✅ 편집 적용·저장</button>
+  </div>
+</div>
+
+<!-- log modal -->
+<div class="sheet" id="logModal">
+  <div class="m-head"><button class="m-x" onclick="closeModals()">✕</button>
+    <h2>📜 버전 · 수정 로그</h2>
+    <p>이 파일의 버전과, 추가·삭제·불러오기 등 모든 변경 이력이에요. 가장 위가 최신 변경입니다.</p></div>
+  <div class="m-body"><div class="logbox" id="logBox"></div></div>
+  <div class="m-foot"><button class="m-ok" onclick="exportJSON()">📤 현재 상태(로그 포함) 저장</button></div>
+</div>
+
+<!-- help modal -->
+<div class="sheet" id="helpModal">
+  <div class="m-head"><button class="m-x" onclick="closeModals()">✕</button>
+    <h2>❓ 사용법 — 우리과 자원망</h2></div>
+  <div class="m-body help">
+    <ul>
+      <li><span class="k">＋ 내 자원 카드 만들기</span> (오른쪽 아래 파란 버튼 또는 상단 노란 버튼) → 이름·이모지·나눌 것·받고 싶은 것을 적어 올립니다.</li>
+      <li><span class="k">친구 노드 누르기</span> → 내가 중심으로 이동하고, <b>왼쪽=나에게 줄 친구(받음)</b>, <b>오른쪽=내가 줄 친구(줌)</b>가 화살표로 흐릅니다.</li>
+      <li><span class="k">자동 저장</span> → 추가·삭제한 내용은 이 기기 브라우저에 자동 저장돼 다시 열어도 남습니다.</li>
+      <li><span class="k">🗂 Raw</span> → 참여자 전체 원본 데이터를 보고, 칸을 눌러 직접 편집한 뒤 ‘적용’할 수 있어요(담당자용).</li>
+      <li><span class="k">📤 파일로 저장 (Export)</span> → 현재 상태 전체를 <b>.json 파일</b>로 내려받습니다. (수정 로그도 함께 저장 → 최종본 식별 가능)</li>
+      <li><span class="k">📥 불러오기 (Import)</span> → 받은 .json을 합칩니다. 같은 이름은 최신으로 덮어쓰며, 새 이름은 추가됩니다.</li>
+      <li><span class="k">🔗 링크</span> → 현재 명단을 담은 공유 링크를 복사합니다(호스팅 시 가장 매끄러움).</li>
+      <li><span class="k">📜 로그</span> → 버전과 변경 이력을 확인합니다.</li>
+    </ul>
+    <p style="font-size:12px;color:var(--slate);line-height:1.7;margin-top:6px">
+      <b>배포·취합 권장 절차:</b> ① 학생들이 각자 카드를 추가 → ② <b>📤 파일로 저장</b>한 .json을 담당자에게 전달 →
+      ③ 담당자가 <b>📥 불러오기</b>로 모두 합친 뒤 → ④ 합쳐진 파일/링크를 다시 배포. 매번 ‘📜 로그’의 최신 시각으로 최종본을 확인하세요.</p>
+  </div>
+  <div class="m-foot">
+    <button class="m-cancel" onclick="document.getElementById('imp').click()">📥 불러오기</button>
+    <button class="m-cancel" onclick="shareLink()">🔗 링크 복사</button>
+    <button class="m-ok" onclick="exportJSON()">📤 파일로 저장</button>
+  </div>
+</div>
+<input type="file" id="imp" accept="application/json,.json" style="display:none" onchange="importJSON(event)">
+
+<div class="toast" id="toast"></div>
+
+<!-- ===== Firebase 실시간 동기화 모듈 (선택) — FB_CONFIG를 채우면 켜집니다 ===== -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+  import { getFirestore, collection, onSnapshot, addDoc, deleteDoc, doc, serverTimestamp, query, orderBy }
+    from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+  window.__FB={initializeApp,getFirestore,collection,onSnapshot,addDoc,deleteDoc,doc,serverTimestamp,query,orderBy};
+  window.dispatchEvent(new Event('fb-ready'));
+</script>
+
+<script>
+/* ===================== META / VERSION ===================== */
+const APP_NAME='충북대학교 아동복지학과 우리과 자원망';
+const APP_VERSION='v3.0 (실시간)';
+const APP_BUILD='2026-06-10';
+
+/* ===================== 실시간 공유 설정 (Firebase) =====================
+   사용법: 아래 FB_CONFIG = null 을, 본인 Firebase 프로젝트의 설정 객체로 바꾸면
+   실시간 공유가 켜집니다. (동봉된 "셋업 가이드" 참고)
+   예)  const FB_CONFIG = { apiKey:"...", authDomain:"...", projectId:"...",
+                           storageBucket:"...", messagingSenderId:"...", appId:"..." };
+   null 로 두면 지금처럼 이 기기에만 저장되는 로컬 모드로 동작합니다. */
+const FB_CONFIG = {
+  apiKey: "AIzaSyDt4BrytnZ8pTsfsFatxonup7c2j7AUzlY",
+  authDomain: "cbnu-cw-map-21346.firebaseapp.com",
+  projectId: "cbnu-cw-map-21346",
+  storageBucket: "cbnu-cw-map-21346.firebasestorage.app",
+  messagingSenderId: "819056112088",
+  appId: "1:819056112088:web:a89f6b6a8287f372d742ad"
+};
+const cloud = { on:false, db:null, col:null };
+function cloudReady(){ return FB_CONFIG && window.__FB; }
+function initCloud(){
+  if(cloud.on || !cloudReady()) return false;
+  const F=window.__FB;
+  try{
+    const app=F.initializeApp(FB_CONFIG); cloud.db=F.getFirestore(app);
+    cloud.col=F.collection(cloud.db,'cards'); cloud.on=true; setLiveBadge(true);
+    F.onSnapshot(F.query(cloud.col, F.orderBy('ts')), snap=>{
+      roster = snap.docs.map(d=>{ const o=normalize(d.data()); o._id=d.id; return o; });
+      rebuild();
+      if(!cloud.seenFirst){ cloud.seenFirst=true; if(!roster.length) toast('아직 카드가 없어요 — ➕로 첫 카드를 올리거나 📥로 명단을 심어보세요'); }
+    }, err=>{ console.error(err); cloud.on=false; setLiveBadge(false); toast('⚠ 실시간 연결 오류 — 로컬 모드로 동작합니다'); });
+    F.onSnapshot(F.query(F.collection(cloud.db,'comments'), F.orderBy('ts')), s=>{
+      comments = s.docs.map(d=>({_id:d.id, ...d.data()})); if(selected) renderComments();
+    }, ()=>{});
+    return true;
+  }catch(e){ console.error(e); cloud.on=false; setLiveBadge(false); return false; }
+}
+async function cloudAdd(card){ const F=window.__FB; const {_id,id,pg,...rest}=card; await F.addDoc(cloud.col,{...rest, ts:F.serverTimestamp()}); }
+async function cloudDel(card){ const F=window.__FB; if(card._id) await F.deleteDoc(F.doc(cloud.db,'cards',card._id)); }
+function setLiveBadge(on){ const b=document.getElementById('liveBadge'); if(b) b.style.display=on?'inline-flex':'none'; }
+
+/* ===================== CATEGORIES ===================== */
+const CATS={
+  '학습':{c:'#3b82f6',e:'📘'}, '발표':{c:'#f59e0b',e:'🎤'},
+  '자료정리':{c:'#10b981',e:'🗂'}, '멘탈케어':{c:'#ec4899',e:'💙'},
+  '취미기타':{c:'#8b5cf6',e:'🎨'}, '진로취업':{c:'#14b8a6',e:'🧭'},
+  '밥일상':{c:'#f97316',e:'🍚'}, '꿀팁정보':{c:'#ef4444',e:'💡'}
+};
+const CAT_ORDER=['학습','발표','자료정리','멘탈케어','취미기타','진로취업','밥일상','꿀팁정보'];
+const EMOJIS=['🙂','😊','🌱','☀️','🫶','🤝','🔥','💡','📚','🛟','💙','🎨','🧭','🍀','⭐','🌈','💪','🎧','🌻','🐣'];
+const FF="Freesentation,'Noto Sans KR',sans-serif";
+
+/* 창립 멤버 (2026-1 사회복지실천론 14장 수업) */
+const SEED=[
+ {name:'오승준',emoji:'☀️',give:['꿀팁정보','취미기타','밥일상'],giveText:'도저히 연락할 사람이 없을 때 연락 주시면 도와드리겠습니다.',want:['진로취업','자료정리','멘탈케어'],wantText:'재사회화가 필요합니다.'},
+ {name:'김준범',emoji:'🫶',give:['학습','발표','자료정리','멘탈케어','취미기타','진로취업','밥일상','꿀팁정보'],giveText:'필요할 때는 언제든 편히 연락주세요. ^^!',want:['꿀팁정보','자료정리','멘탈케어','취미기타'],wantText:'도태되지 않도록 MZ의 유행, 청주 생활 꿀팁, 그리고 여러분의 관심과 사랑.'},
+ {name:'전유정',emoji:'🌱',give:['멘탈케어','밥일상'],giveText:'같이 맛있는거 먹고 수다 떨어요 ~~',want:['학습','진로취업'],wantText:'진로 고민이 많은 요즘..........'},
+ {name:'이재국',emoji:'🤝',give:['자료정리','멘탈케어','취미기타'],giveText:'수영 알려줄 수 있어요. 시험 정리본 있으니 교환 받습니다.',want:['멘탈케어','취미기타','꿀팁정보'],wantText:'좋은 책 추천 받습니다.'},
+ {name:'강현채',emoji:'🔥',give:['취미기타','밥일상','학습'],giveText:'러닝, 청소년 정책제안 같이해요.',want:['멘탈케어','취미기타'],wantText:'함께 멘탈 챙기고 취미 나눠요.'},
+ {name:'김민영',emoji:'🫶',give:['밥일상','학습','멘탈케어'],giveText:'맛있는 디저트 추천해줄게요. 아는 지식은 몽땅 드릴게요, 고민 함께 나눠요.',want:['자료정리','꿀팁정보','멘탈케어','진로취업'],wantText:'자료 정리본이 절실. 꿀팁 공유해요. 불안한 마음 잠재워줄 분 찾아요. 같이 취업해요.'},
+ {name:'장수연',emoji:'☀️',give:['멘탈케어','밥일상','취미기타'],giveText:'편안한 시간을 나눠줄게요 ~~',want:['꿀팁정보','진로취업','학습','발표'],wantText:'앞으로의 미래에 대해 도움이 필요햐..'},
+ {name:'김서진',emoji:'🤝',give:['꿀팁정보','자료정리'],giveText:'그동안 학교다니며 얻은 자료와 정보 나누기.',want:['멘탈케어'],wantText:'무사졸업 기도해주기.'},
+ {name:'이상준',emoji:'🌱',give:['멘탈케어','꿀팁정보','밥일상'],giveText:'실패를 성공으로 만들 강한 멘탈을 줄 수 있어. 각종 잡지식 공유 가능.',want:['진로취업','학습'],wantText:'공부 어떻게 하는지 궁금해.. 앞으로 어떤 삶을 살지 고민..'},
+ {name:'서지민',emoji:'🫶',give:['자료정리','멘탈케어','학습'],giveText:'할일 많을 때 미루지 않는 습관, 하기 싫을 땐 노래 들으면서!',want:['발표','학습','진로취업','자료정리','꿀팁정보'],wantText:'발표를 떨지않고 잘하는 방법 알고싶어요.'},
+ {name:'이채원',emoji:'🤝',give:['자료정리','밥일상'],giveText:'필요하면 말해줘.',want:['발표','꿀팁정보'],wantText:'말을 잘하는 방법을 알고싶어.'},
+ {name:'이해빈',emoji:'🫶',give:['밥일상','멘탈케어','취미기타'],giveText:'옆에서 긍정적인 말을 해줄게, 같이 밥 먹자~~',want:['학습','발표','자료정리','진로취업','꿀팁정보'],wantText:'공부 도와주라..'},
+ {name:'박주혜',emoji:'🔥',give:['멘탈케어','꿀팁정보','취미기타'],giveText:'맛집 발견하면 공유해드릴게요! 🤩',want:['진로취업','취미기타','밥일상','꿀팁정보','멘탈케어'],wantText:'맛집 등 좋은 정보 공유해주세요 ㅎㅎ'},
+ {name:'이진경',emoji:'🛟',give:['멘탈케어','밥일상','꿀팁정보'],giveText:'힘들 때 진지하게 이야기 들어줄 수 있음, 재밌는 이슈·아이돌 얘기, 저녁 메뉴 골라주기 가능.',want:['취미기타','멘탈케어','꿀팁정보','학습','밥일상','진로취업'],wantText:'다양한 이야기 나누고 싶어요.'},
+ {name:'김지현',emoji:'🤝',give:['밥일상','멘탈케어','꿀팁정보','취미기타','자료정리'],giveText:'돈 계산 해드립니다.',want:['학습','자료정리','발표','멘탈케어'],wantText:'기말고사 정리본 있는 사람.. 멘탈케어해줄 사람..'},
+ {name:'김선영',emoji:'📚',give:['학습','자료정리'],giveText:'자료정리 도움.',want:['멘탈케어','발표'],wantText:'정신적으로 강해지기.'},
+ {name:'권아림',emoji:'🌱',give:['자료정리','멘탈케어','학습'],giveText:'수업 학습 내용·자료 정리 알려줄게요, 힘들 때 멘탈케어법 알려줄게요.',want:['발표','꿀팁정보','학습','진로취업'],wantText:'대학 생활·미래 관련 여러 도움 받고 싶어요.'},
+ {name:'최아현',emoji:'🤝',give:['멘탈케어','취미기타'],giveText:'서로 취미 공유해요.',want:['학습','진로취업'],wantText:'미래 진로에 대한 이야기를 들려주세요.'},
+ {name:'김태현',emoji:'🤝',give:['꿀팁정보'],giveText:'긍정적 마인드 갖는 법.',want:[],wantText:'(받고 싶은 도움은 아직 고르는 중)'},
+ {name:'장용빈',emoji:'🤝',give:['학습','발표','자료정리','멘탈케어','꿀팁정보','밥일상','진로취업','취미기타'],giveText:'모르는 거 알려주기, 적극적 발표참여, 수업 정리본, 언제든 응원할 조력자!, 시험·진로·공모전 꿀팁, 맛집, 취미도 함께!',want:['학습','꿀팁정보','멘탈케어'],wantText:'같이 토론하며 공부, 서로 정보공유·응원해요!'},
+ {name:'박민혁',emoji:'💡',give:['꿀팁정보'],giveText:'관심있는 분들께 좋은 영상 추천드릴게요^^',want:['멘탈케어'],wantText:'시험공부 팁..'},
+ {name:'최은송',emoji:'☀️',give:['멘탈케어'],giveText:'칭찬을 잘 해줄 수 있다~',want:['발표'],wantText:'발표 울렁증 응원 받고 싶다~'}
+];
+const WARM=[
+ '도저히 연락할 사람이 없을 때, 언제든 편히 연락주세요. 우리는 서로의 자원이니까요. 💛',
+ '필요할 때는 망설이지 말고 손 내밀어요. 옆에 있어 줄게요. 🫶',
+ '혼자 버티지 않아도 돼요. 이 안에 너를 도울 친구가 분명히 있어요. 🌱',
+ '오늘 하루도 잘 버틴 너에게. 우리가 서로의 버팀목이 되어요. ☀️',
+ '같은 과라는 인연, 그것만으로 우리는 이미 서로의 자원이에요. 🌈'
+];
+
+/* ===================== STATE (roster + log) ===================== */
+const LSKEY='cbnu_acw_resourcemap_v2';
+let roster=[], log=[];
+function normalize(c){return {name:(c.name||'이름').slice(0,12),emoji:c.emoji||'🙂',
+  give:Array.isArray(c.give)?c.give.filter(x=>CATS[x]):[], giveText:c.giveText||'',
+  want:Array.isArray(c.want)?c.want.filter(x=>CATS[x]):[], wantText:c.wantText||'', custom:!!c.custom};}
+function lsGet(){try{const v=localStorage.getItem(LSKEY);return v?JSON.parse(v):null;}catch(e){return null;}}
+function saveAll(){try{localStorage.setItem(LSKEY,JSON.stringify({v:APP_VERSION,roster:roster.map(({id,pg,...r})=>r),log}));}catch(e){}}
+function addLog(action){ log.unshift({t:new Date().toISOString(), a:action}); if(log.length>300) log.length=300; saveAll(); }
+function parseHash(){const m=location.hash.match(/#r=(.+)/);if(!m)return null;
+  try{const d=JSON.parse(decodeURIComponent(escape(atob(m[1]))));return Array.isArray(d)?d.map(normalize):(d.명단||d.roster||[]).map(normalize);}catch(e){return null;}}
+function loadRoster(){
+  const h=parseHash();
+  if(h&&h.length){ roster=h; log=[]; addLog('공유 링크로 명단 '+h.length+'명 불러옴'); try{history.replaceState(null,'',location.pathname);}catch(e){} return; }
+  const saved=lsGet();
+  if(saved&&saved.roster&&saved.roster.length){ roster=saved.roster.map(normalize); log=saved.log||[]; }
+  else if(FB_CONFIG){ roster=[]; log=[]; }   /* 실시간 모드: 클라우드 스냅샷이 채움 */
+  else { roster=SEED.map(s=>({...s,give:[...s.give],want:[...s.want]})); log=[]; addLog('창립 멤버 '+SEED.length+'명으로 시작'); }
+}
+
+/* ===================== CANVAS STATE ===================== */
+let STUDENTS=[];
+const cv=document.getElementById('net'), ctx=cv.getContext('2d');
+let W=0,H=0,DPR=1, anchors={}, present=[], t0=performance.now();
+let nodes=[];
+let selected=null, hoverN=null, dragNode=null, ddx=0, ddy=0, moved=false;
+let pdownX=0, pdownY=0, adminMode=false, editingCard=null;
+let comments=[];
+let floatOn=true, allFlow=false, catFilter=null, focusMap={};
+const R=30; let HEADER=78;
+const rand=n=>Math.random()*n-n/2;
+
+function resize(){
+  DPR=Math.min(2,window.devicePixelRatio||1);
+  W=window.innerWidth; H=window.innerHeight;
+  cv.width=W*DPR; cv.height=H*DPR; cv.style.width=W+'px'; cv.style.height=H+'px';
+  ctx.setTransform(DPR,0,0,DPR,0,0);
+  const topEl=document.querySelector('.top'); HEADER=(topEl?topEl.offsetHeight:64)+10;
+  const hn=document.getElementById('hint'); if(hn) hn.style.top=(HEADER+6)+'px';
+  const fab=document.querySelector('.fab'); if(fab) fab.style.top=(HEADER+6)+'px';
+  layoutAnchors();
+  if(selected) computeFocus(selected.s);
+}
+function layoutAnchors(){
+  const cx=W/2, cy=(H+HEADER)/2, rx=Math.min(W*0.36,560), ry=Math.min((H-HEADER)*0.36,360); anchors={};
+  present.forEach((c,i)=>{ const a=-Math.PI/2 + i/Math.max(1,present.length)*Math.PI*2;
+    anchors[c]={x:cx+Math.cos(a)*rx, y:cy+Math.sin(a)*ry, c}; });
+}
+function rebuild(){
+  STUDENTS=roster;
+  roster.forEach((s,i)=>{ s.id=i; s.pg=(s.give&&s.give[0])||(s.want&&s.want[0])||'멘탈케어'; });
+  present=CAT_ORDER.filter(c=>roster.some(s=>s.pg===c));
+  layoutAnchors();
+  const old={}; nodes.forEach(n=>{ old[n.s.name]={x:n.x,y:n.y,phase:n.phase}; });
+  nodes=roster.map(s=>{ const o=old[s.name], a=anchors[s.pg]||{x:W/2,y:(H+HEADER)/2};
+    return {s, x:o?o.x:a.x+rand(80), y:o?o.y:a.y+rand(80), vx:0,vy:0, phase:o?o.phase:Math.random()*6.283, dx:0,dy:0}; });
+  buildPick(); updateCount(); refreshLeg();
+  if(selected){ const ns=nodes.find(n=>n.s.name===selected.s.name);
+    if(ns){ selected=ns; computeFocus(ns.s); } else { selected=null; document.getElementById('panel').classList.remove('open'); } }
+}
+function updateCount(){ document.getElementById('cnt').textContent=roster.length; }
+
+/* ===================== MATCH ===================== */
+const inter=(a,b)=>a.filter(x=>b.includes(x));
+function giversFor(me){return STUDENTS.filter(p=>p.id!==me.id && inter(p.give,me.want).length)
+  .map(p=>({p,cats:inter(p.give,me.want)})).sort((a,b)=>b.cats.length-a.cats.length);}
+function receiversFor(me){return STUDENTS.filter(q=>q.id!==me.id && inter(me.give,q.want).length)
+  .map(q=>({p:q,cats:inter(me.give,q.want)})).sort((a,b)=>b.cats.length-a.cats.length);}
+function activeEdges(){
+  if(!selected){ if(!allFlow) return [];
+    const es=[]; STUDENTS.forEach(a=>STUDENTS.forEach(b=>{ if(a.id===b.id)return;
+      const m=inter(a.give,b.want); if(m.length){ if(!catFilter||m.includes(catFilter)) es.push({a:a.id,b:b.id,cat:catFilter&&m.includes(catFilter)?catFilter:m[0]});}}));
+    return es; }
+  const me=selected.s, es=[];
+  giversFor(me).forEach(g=>{const cat=catFilter&&g.cats.includes(catFilter)?catFilter:g.cats[0];
+    if(!catFilter||g.cats.includes(catFilter)) es.push({a:g.p.id,b:me.id,cat,kind:'in'});});
+  receiversFor(me).forEach(r=>{const cat=catFilter&&r.cats.includes(catFilter)?catFilter:r.cats[0];
+    if(!catFilter||r.cats.includes(catFilter)) es.push({a:me.id,b:r.p.id,cat,kind:'out'});});
+  return es;
+}
+
+/* ===================== FOCUS LAYOUT ===================== */
+function isPhone(){ return window.innerWidth<=640; }
+function visBottom(){ return isPhone()? H*0.52 : H; }                 /* 폰: 하단 시트 위 영역만 사용 */
+function focusCY(){ return isPhone()? (HEADER+visBottom())/2 : (H+HEADER)/2; }
+function bottomBound(){ return isPhone()? visBottom()-R-8 : H-R-30; }
+function focusMaxR(){ return isPhone()? Math.max(80,(visBottom()-HEADER)/2 - R - 8) : 99999; }
+function computeFocus(me){
+  focusMap={}; const cx=W/2, cy=focusCY();
+  const givers=giversFor(me), receivers=receiversFor(me);
+  const rid=new Set(receivers.map(o=>o.p.id));
+  const mutual=givers.filter(o=>rid.has(o.p.id)).map(o=>o.p.id); const mset=new Set(mutual);
+  const leftOnly=givers.filter(o=>!mset.has(o.p.id)).map(o=>o.p.id);
+  const rightOnly=receivers.filter(o=>!mset.has(o.p.id)).map(o=>o.p.id);
+  focusMap[me.id]={x:cx,y:cy,role:'me'};
+  placeArc(leftOnly, Math.PI, 'recv', cx, cy); placeArc(rightOnly, 0, 'give', cx, cy); placeMutual(mutual, cx, cy);
+}
+function placeArc(ids, base, role, cx, cy){
+  const L=ids.length; if(!L) return;
+  const avail=(role==='recv'? cx : (W-cx)) - 80;
+  const Rr=Math.min(Math.max(210, L*22), Math.max(170,avail), focusMaxR());
+  const span=Math.min(2.5, 0.5 + L*0.13);
+  ids.forEach((id,i)=>{ const ang=base + (L>1? (i/(L-1)-0.5)*span : 0);
+    let x=cx+Math.cos(ang)*Rr, y=cy+Math.sin(ang)*Rr; y=Math.max(HEADER+R+34, Math.min(bottomBound(), y)); focusMap[id]={x,y,role}; });
+}
+function placeMutual(ids, cx, cy){
+  const M=ids.length; if(!M) return;
+  ids.forEach((id,i)=>{ const top=i%2===0, row=Math.floor(i/2);
+    let y=cy+(top?-1:1)*(R*3.2+row*72); y=Math.max(HEADER+R+34, Math.min(bottomBound(), y)); focusMap[id]={x:cx+(top?-30:30), y, role:'mutual'}; });
+}
+
+/* ===================== DRAW ===================== */
+function rgba(hex,a){const n=parseInt(hex.slice(1),16);return `rgba(${n>>16&255},${n>>8&255},${n&255},${a})`;}
+function roundRect(x,y,w,h,r){ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath();}
+function drawChevron(x,y,ang,col,s){ s=s||6.5;
+  ctx.strokeStyle=col; ctx.lineWidth=2.6; ctx.lineCap='round'; ctx.lineJoin='round'; ctx.beginPath();
+  ctx.moveTo(x-Math.cos(ang-0.55)*s, y-Math.sin(ang-0.55)*s); ctx.lineTo(x,y);
+  ctx.lineTo(x-Math.cos(ang+0.55)*s, y-Math.sin(ang+0.55)*s); ctx.stroke(); }
+function qpt(ax,ay,cx,cy,bx,by,p){const u=1-p;return[u*u*ax+2*u*p*cx+p*p*bx, u*u*ay+2*u*p*cy+p*p*by];}
+function qtan(ax,ay,cx,cy,bx,by,p){const u=1-p;return Math.atan2(2*u*(cy-ay)+2*p*(by-cy), 2*u*(cx-ax)+2*p*(bx-cx));}
+function drawFlowEdge(e,idmap,t){
+  const A=idmap[e.a], B=idmap[e.b]; if(!A||!B)return;
+  const col=CATS[e.cat].c; const ang0=Math.atan2(B.dy-A.dy,B.dx-A.dx);
+  const ax=A.dx+Math.cos(ang0)*R, ay=A.dy+Math.sin(ang0)*R, bx=B.dx-Math.cos(ang0)*R, by=B.dy-Math.sin(ang0)*R;
+  if(!selected){ ctx.strokeStyle=rgba(col,0.10); ctx.lineWidth=0.8; ctx.beginPath(); ctx.moveTo(ax,ay); ctx.lineTo(bx,by); ctx.stroke(); return; }
+  const len=Math.hypot(bx-ax,by-ay)||1, mx=(ax+bx)/2,my=(ay+by)/2, perp=ang0+Math.PI/2;
+  const bend=(e.kind==='in'?1:-1)*Math.min(46,len*0.16);
+  const cx=mx+Math.cos(perp)*bend, cy=my+Math.sin(perp)*bend;
+  ctx.strokeStyle=rgba(col,0.38); ctx.lineWidth=2; ctx.beginPath(); ctx.moveTo(ax,ay); ctx.quadraticCurveTo(cx,cy,bx,by); ctx.stroke();
+  const ea=qtan(ax,ay,cx,cy,bx,by,0.99);
+  ctx.fillStyle=rgba(col,0.9); ctx.beginPath(); ctx.moveTo(bx,by);
+  ctx.lineTo(bx-12*Math.cos(ea-.42),by-12*Math.sin(ea-.42)); ctx.lineTo(bx-12*Math.cos(ea+.42),by-12*Math.sin(ea+.42)); ctx.closePath(); ctx.fill();
+  const n=Math.max(2,Math.floor(len/48));
+  for(let k=0;k<n;k++){ let p=((t*0.30 + k/n + e.a*0.07)%1); p=0.10+p*0.80;
+    const pt=qpt(ax,ay,cx,cy,bx,by,p), tan=qtan(ax,ay,cx,cy,bx,by,p); drawChevron(pt[0],pt[1],tan,rgba(col,0.95),6.5); }
+}
+function drawFocusBg(){
+  const cx=W/2, me=selected.s;
+  let g=ctx.createLinearGradient(0,0,cx,0); g.addColorStop(0,'rgba(14,138,82,0.07)'); g.addColorStop(1,'rgba(14,138,82,0)');
+  ctx.fillStyle=g; ctx.fillRect(0,HEADER,cx,H-HEADER);
+  g=ctx.createLinearGradient(W,0,cx,0); g.addColorStop(0,'rgba(37,99,235,0.07)'); g.addColorStop(1,'rgba(37,99,235,0)');
+  ctx.fillStyle=g; ctx.fillRect(cx,HEADER,W-cx,H-HEADER);
+  ctx.strokeStyle='rgba(23,35,66,0.06)'; ctx.lineWidth=1; ctx.setLineDash([5,6]);
+  ctx.beginPath(); ctx.moveTo(cx,HEADER+12); ctx.lineTo(cx,H-16); ctx.stroke(); ctx.setLineDash([]);
+  const gi=giversFor(me).length, re=receiversFor(me).length; ctx.textBaseline='alphabetic';
+  ctx.textAlign='left'; ctx.font='900 14px '+FF; ctx.fillStyle='#0e8a52';
+  ctx.fillText('💝 나에게 줄 수 있어요  ›››  내가 받음 ('+gi+')', 22, HEADER+28);
+  ctx.textAlign='right'; ctx.fillStyle='#2563eb';
+  ctx.fillText('내가 줄 수 있어요  ›››  내가 줌 ('+re+')  🤝', W-22, HEADER+28);
+  ctx.textAlign='center'; ctx.font='800 11.5px '+FF; ctx.fillStyle='#8a93a0';
+  ctx.fillText('받기 ↞   나   ↠ 주기', cx, H-18);
+}
+function draw(){
+  const t=(performance.now()-t0)/1000; ctx.clearRect(0,0,W,H);
+  nodes.forEach(n=>{ const amp=floatOn?3.6:0; n.dx=n.x+Math.sin(t*0.7+n.phase)*amp; n.dy=n.y+Math.cos(t*0.55+n.phase*1.3)*amp; });
+  if(!selected){
+    present.forEach(c=>{ const a=anchors[c], col=CATS[c].c, dim=catFilter&&catFilter!==c;
+      const g=ctx.createRadialGradient(a.x,a.y,8,a.x,a.y,150); g.addColorStop(0,rgba(col,dim?0.04:0.13)); g.addColorStop(1,rgba(col,0));
+      ctx.fillStyle=g; ctx.beginPath(); ctx.arc(a.x,a.y,150,0,7); ctx.fill();
+      ctx.globalAlpha=dim?0.3:0.9; ctx.fillStyle=col; ctx.font='900 13px '+FF; ctx.textAlign='center';
+      ctx.fillText(CATS[c].e+' '+c, a.x, Math.max(a.y-118, HEADER+22)); ctx.globalAlpha=1; });
+  }
+  if(selected) drawFocusBg();
+  const edges=activeEdges(); const idmap=Object.fromEntries(nodes.map(n=>[n.s.id,n]));
+  edges.forEach(e=>drawFlowEdge(e,idmap,t));
+  let connected=null;
+  if(selected){ connected=new Set([selected.s.id]); edges.forEach(e=>{connected.add(e.a);connected.add(e.b);}); }
+  nodes.forEach(n=>{
+    const s=n.s, col=CATS[s.pg].c; let alpha=1;
+    if(selected){ alpha = connected.has(s.id)?1:0.12; }
+    else if(catFilter){ alpha = (s.give.includes(catFilter)||s.want.includes(catFilter))?1:0.18; }
+    ctx.globalAlpha=alpha;
+    const isSel=(selected===n), isHover=(hoverN===n);
+    ctx.beginPath(); ctx.arc(n.dx,n.dy,R+(isSel?12:6),0,7); ctx.fillStyle=rgba(col,isSel?0.22:0.12); ctx.fill();
+    ctx.save(); ctx.shadowColor='rgba(23,35,66,.18)'; ctx.shadowBlur=isSel?16:9; ctx.shadowOffsetY=3;
+    ctx.beginPath(); ctx.arc(n.dx,n.dy,R,0,7); ctx.fillStyle='#fff'; ctx.fill();
+    ctx.lineWidth=isSel?4:3; ctx.strokeStyle=col; ctx.stroke(); ctx.restore();
+    if(isHover&&!isSel){ ctx.beginPath(); ctx.arc(n.dx,n.dy,R+3,0,7); ctx.strokeStyle=rgba(col,0.6); ctx.lineWidth=2; ctx.stroke(); }
+    ctx.font='17px '+FF; ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.fillText(s.emoji, n.dx, n.dy-R-9);
+    ctx.fillStyle='#172342'; ctx.font='900 12.5px '+FF; ctx.fillText(s.name, n.dx, n.dy);
+    const f=focusMap[s.id];
+    if(selected && f){
+      const role=f.role;
+      const txt=role==='me'?'나':role==='recv'?'받음':role==='give'?'줌':'상호';
+      const bc =role==='me'?'#172342':role==='recv'?'#0e8a52':role==='give'?'#2563eb':'#8b5cf6';
+      ctx.font='900 9.5px '+FF; ctx.textAlign='center'; ctx.textBaseline='middle';
+      const bw=ctx.measureText(txt).width+13; ctx.fillStyle=bc; roundRect(n.dx-bw/2, n.dy+R+6, bw, 15, 7); ctx.fill();
+      ctx.fillStyle='#fff'; ctx.fillText(txt, n.dx, n.dy+R+13.7);
+    }
+    ctx.textBaseline='alphabetic'; ctx.globalAlpha=1;
+  });
+}
+function loop(){ physics(); draw(); requestAnimationFrame(loop); }
+
+/* ===================== PHYSICS ===================== */
+function physics(){
+  nodes.forEach(n=>{ if(n===dragNode) return; let tx,ty;
+    if(selected){ const f=focusMap[n.s.id]; if(f){ tx=f.x; ty=f.y; } else { const a=anchors[n.s.pg]||{x:W/2,y:H/2}; tx=a.x; ty=a.y; } }
+    else { const a=anchors[n.s.pg]||{x:W/2,y:H/2}; tx=a.x; ty=a.y; }
+    n.vx += (tx-n.x)*0.022; n.vy += (ty-n.y)*0.022; });
+  for(let i=0;i<nodes.length;i++)for(let j=i+1;j<nodes.length;j++){
+    const a=nodes[i],b=nodes[j]; let dx=a.x-b.x,dy=a.y-b.y,d2=dx*dx+dy*dy+.01; const HARD=R*2.5;
+    if(d2<HARD*HARD){const d=Math.sqrt(d2),f=(HARD-d)/HARD*1.6,ux=dx/d,uy=dy/d;
+      if(a!==dragNode){a.vx+=ux*f;a.vy+=uy*f;} if(b!==dragNode){b.vx-=ux*f;b.vy-=uy*f;}} }
+  nodes.forEach(n=>{ if(n===dragNode)return; n.vx*=0.80; n.vy*=0.80; n.x+=n.vx; n.y+=n.vy;
+    n.x=Math.max(R+6,Math.min(W-R-6,n.x)); n.y=Math.max(R+HEADER+6,Math.min(H-R-6,n.y)); });
+}
+
+/* ===================== INTERACTION ===================== */
+function ptr(ev){const r=cv.getBoundingClientRect();return{x:ev.clientX-r.left,y:ev.clientY-r.top};}
+function hit(x,y){for(let i=nodes.length-1;i>=0;i--){const n=nodes[i];if((x-n.dx)**2+(y-n.dy)**2<R*R*1.5)return n;}return null;}
+cv.addEventListener('pointerdown',ev=>{ ev.preventDefault(); const p=ptr(ev), n=hit(p.x,p.y);
+  pdownX=p.x; pdownY=p.y;
+  if(n){ dragNode=n; ddx=p.x-n.x; ddy=p.y-n.y; moved=false; n.vx=n.vy=0; try{cv.setPointerCapture(ev.pointerId);}catch(e){} } });
+cv.addEventListener('pointermove',ev=>{ const p=ptr(ev);
+  if(dragNode){
+    if(!moved){ if(Math.hypot(p.x-pdownX,p.y-pdownY)<9) return; moved=true; }  /* 손가락 미세 떨림은 무시 → 탭은 탭으로 */
+    dragNode.x=Math.max(R,Math.min(W-R,p.x-ddx)); dragNode.y=Math.max(R+HEADER,Math.min(H-R,p.y-ddy)); dragNode.vx=dragNode.vy=0; return; }
+  hoverN=hit(p.x,p.y); cv.style.cursor=hoverN?'pointer':'default'; });
+cv.addEventListener('pointerup',ev=>{
+  if(dragNode && !moved){ select(dragNode); }            /* 탭 = 선택 */
+  else if(!dragNode){ const p=ptr(ev); if(!hit(p.x,p.y)) deselect(); }
+  dragNode=null; });
+cv.addEventListener('pointercancel',()=>{dragNode=null;});
+
+/* ===================== SELECT / PANEL ===================== */
+function select(n){ selected=n; hideHint(); document.getElementById('pick').value=n.s.id;
+  computeFocus(n.s); renderPanel(n.s); document.getElementById('panel').classList.add('open'); }
+function selectById(id){ const n=nodes[id]; if(n) select(n); }
+function deselect(){ selected=null; focusMap={}; catFilter=null; refreshLeg();
+  document.getElementById('panel').classList.remove('open'); document.getElementById('pick').value=''; }
+function chipHTML(cats){return cats.map(c=>`<span class="chip" style="background:${CATS[c].c}">${CATS[c].e} ${c}</span>`).join('');}
+function esc(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function renderPanel(me){
+  document.getElementById('pAv').textContent=me.emoji;
+  document.getElementById('pName').textContent=me.name;
+  document.getElementById('pSub').textContent=`나눌 수 있는 ${me.give.length} · 받고 싶은 ${me.want.length}`+(me.custom?' · 직접 추가한 카드':'');
+  const givers=giversFor(me), receivers=receiversFor(me), warm=WARM[me.id%WARM.length];
+  const card=(o,kind)=>{ const q=kind==='in'?o.p.giveText:o.p.wantText;
+    return `<div class="mcard" onclick="selectById(${o.p.id})"><div class="mtop"><span class="me">${o.p.emoji}</span>${esc(o.p.name)}</div>
+      <div class="mchips">${chipHTML(o.cats)}</div><div class="mq">${kind==='in'?'💬 ':'🙏 '}${esc(q)}</div></div>`; };
+  document.getElementById('pBody').innerHTML=`
+    <div class="p-givewant">
+      <div class="p-block"><div class="lbl give">🎁 내가 나눌 수 있어요</div>
+        <div class="chips">${me.give.length?chipHTML(me.give):'<span class="chip" style="background:#b5bdc7">아직 없음</span>'}</div>
+        <div class="quote">${esc(me.giveText)||'편하게 연락 주세요 :)'}</div></div>
+      <div class="p-block"><div class="lbl want">🌧 내가 받고 싶어요</div>
+        <div class="chips">${me.want.length?chipHTML(me.want):'<span class="chip" style="background:#b5bdc7">아직 고르는 중</span>'}</div>
+        <div class="quote">${esc(me.wantText)||'함께 나눠요.'}</div></div>
+    </div>
+    <div class="match-sec"><div class="sh">💝 내가 받고 싶은 걸 줄 수 있는 친구 <span class="cnt">${givers.length}</span> <span class="swipe-hint">← 옆으로 넘겨보세요</span></div>
+      <div class="mrow">${givers.length? givers.map(o=>card(o,'in')).join('') : '<div class="empty">받고 싶은 항목을 고르면, 그걸 나눠줄 친구가 여기에 떠요. 🌱</div>'}</div></div>
+    <div class="match-sec"><div class="sh">🤝 내가 힘이 되어줄 수 있는 친구 <span class="cnt">${receivers.length}</span> <span class="swipe-hint">← 옆으로 넘겨보세요</span></div>
+      <div class="mrow">${receivers.length? receivers.map(o=>card(o,'out')).join('') : '<div class="empty">아직은 없지만, 너의 존재만으로도 충분해요. 💛</div>'}</div></div>
+    <div class="warm"><b>따뜻한 한마디</b><br>${warm}</div>
+    <div class="cmt-sec">
+      <div class="cmt-h">💬 친구들의 한마디 <span class="cnt" id="cmtCount">0</span></div>
+      <div id="cmtList"></div>
+      <div class="cmt-form">
+        <input id="cmtAuthor" class="cmt-in cmt-name" maxlength="12" placeholder="이름">
+        <input id="cmtText" class="cmt-in cmt-msg" maxlength="140" placeholder="따뜻한 한마디 남기기…" onkeydown="if(event.key==='Enter')postComment()">
+        <button class="cmt-btn" onclick="postComment()">등록</button>
+      </div>
+    </div>
+    ${adminMode ? `<div style="display:flex;gap:8px;margin-top:16px">
+       <button class="p-edit" style="flex:1;width:auto" onclick="adminEdit()">✏️ 수정</button>
+       <button class="p-del" style="flex:1;width:auto;margin-top:0" onclick="deleteCurrent()">🗑 삭제</button></div>
+       <div style="font-size:10.5px;color:var(--steel);margin-top:8px">🔓 관리자 모드 — 변경 내역은 📜 로그에서 볼 수 있어요</div>` : ''}`;
+  document.getElementById('pBody').scrollTop=0;
+  try{ const ln=localStorage.getItem('cbnu_acw_lastname'); if(ln) document.getElementById('cmtAuthor').value=ln; }catch(e){}
+  renderComments();
+}
+function deleteCurrent(){ if(!selected){return;} if(!adminMode){toast('관리자 모드에서만 삭제할 수 있어요');return;} const me=selected.s;
+  const liveMsg = cloud.on ? ' (모두의 화면에서 사라집니다)' : ' (이 기기에서만 사라져요)';
+  if(!confirm(me.name+' 님의 자원 카드를 삭제할까요?'+liveMsg))return;
+  if(cloud.on){ cloudDel(me).then(()=>{addLog('카드 삭제: '+me.name); toast('🗑 삭제했어요');}).catch(()=>toast('⚠ 삭제 실패'));
+    selected=null; document.getElementById('panel').classList.remove('open'); document.getElementById('pick').value=''; return; }
+  roster=roster.filter(s=>s!==me); addLog('카드 삭제: '+me.name); selected=null;
+  document.getElementById('panel').classList.remove('open'); document.getElementById('pick').value='';
+  rebuild(); toast('🗑 카드를 삭제했어요'); }
+
+/* ===================== 관리자 모드 ===================== */
+const ADMIN_PW='child104';   /* ← 관리자 비밀번호. 바꾸려면 이 값을 수정하세요 */
+function toggleAdmin(){
+  const b=document.getElementById('btnAdmin');
+  if(adminMode){ adminMode=false; b.classList.remove('on'); b.textContent='🔑 관리자'; toast('관리자 모드를 종료했어요'); if(selected) renderPanel(selected.s); return; }
+  const pw=prompt('관리자 비밀번호를 입력하세요'); if(pw===null) return;
+  if(pw===ADMIN_PW){ adminMode=true; b.classList.add('on'); b.textContent='🔓 관리자 ON';
+    toast('🔓 관리자 모드 — 노드를 눌러 수정·삭제할 수 있어요'); openLog(); if(selected) renderPanel(selected.s); }
+  else { toast('비밀번호가 틀렸어요'); }
+}
+function adminEdit(){ if(!selected||!adminMode) return; const me=selected.s;
+  editingCard=me; formGive=new Set(me.give); formWant=new Set(me.want); formEmoji=me.emoji||'🙂';
+  fName.value=me.name; fGiveText.value=me.giveText; fWantText.value=me.wantText;
+  buildFormChips(); document.getElementById('addTitle').textContent='✏️ 카드 수정';
+  showModal('addModal'); setTimeout(()=>fName.focus(),80); }
+
+/* ===================== 댓글(한마디) ===================== */
+const CMT_LS='cbnu_acw_comments_v1';
+function loadComments(){ try{const v=localStorage.getItem(CMT_LS); comments=v?JSON.parse(v):[];}catch(e){comments=[];} }
+function saveComments(){ try{localStorage.setItem(CMT_LS, JSON.stringify(comments));}catch(e){} }
+async function cloudAddComment(c){ const F=window.__FB; await F.addDoc(F.collection(cloud.db,'comments'), {...c, ts:F.serverTimestamp()}); }
+async function cloudDelComment(id){ const F=window.__FB; await F.deleteDoc(F.doc(cloud.db,'comments',id)); }
+function renderComments(){
+  const box=document.getElementById('cmtList'); if(!box||!selected) return;
+  const list=comments.filter(c=>c.cardName===selected.s.name);
+  const cc=document.getElementById('cmtCount'); if(cc) cc.textContent=list.length;
+  box.innerHTML = list.length ? list.map(c=>`<div class="cmt"><div class="cmt-top"><b>${esc(c.author||'익명')}</b>${(adminMode&&c._id)?`<button class="cmt-del" onclick="delComment('${c._id}')">✕</button>`:''}</div><div class="cmt-txt">${esc(c.text)}</div></div>`).join('')
+    : '<div class="cmt-empty">아직 한마디가 없어요 — 첫 응원을 남겨보세요 💬</div>';
+}
+function postComment(){
+  if(!selected) return;
+  const aEl=document.getElementById('cmtAuthor'), tEl=document.getElementById('cmtText');
+  const author=(aEl.value||'').trim().slice(0,12), text=(tEl.value||'').trim().slice(0,140);
+  if(!text){ toast('한마디를 입력해 주세요'); tEl.focus(); return; }
+  try{ localStorage.setItem('cbnu_acw_lastname', author); }catch(e){}
+  const c={cardName:selected.s.name, author:author||'익명', text};
+  tEl.value='';
+  if(cloud.on){ cloudAddComment(c).then(()=>toast('💬 한마디를 남겼어요!')).catch(()=>toast('⚠ 등록 실패 — 보안 규칙(comments)을 확인하세요')); return; }
+  c._id='c'+Date.now()+Math.floor(Math.random()*1000); comments.push(c); saveComments(); renderComments(); toast('💬 한마디를 남겼어요!');
+}
+function delComment(id){ if(!adminMode) return; if(!confirm('이 댓글을 삭제할까요?')) return;
+  if(cloud.on){ cloudDelComment(id).then(()=>toast('🗑 삭제했어요')).catch(()=>toast('⚠ 삭제 실패')); }
+  else { comments=comments.filter(c=>c._id!==id); saveComments(); renderComments(); toast('🗑 삭제했어요'); } }
+
+/* ===================== ADD-CARD FORM ===================== */
+let formGive=new Set(), formWant=new Set(), formEmoji='🙂';
+function openAdd(){ editingCard=null; formGive.clear(); formWant.clear(); formEmoji='🙂';
+  fName.value=''; fGiveText.value=''; fWantText.value=''; buildFormChips();
+  document.getElementById('addTitle').textContent='➕ 내 자원 카드 만들기';
+  showModal('addModal'); setTimeout(()=>fName.focus(),80); }
+function buildFormChips(){
+  fEmoji.innerHTML=EMOJIS.map(e=>`<button type="button" class="emo ${e===formEmoji?'on':''}" onclick="pickFormEmoji('${e}')">${e}</button>`).join('');
+  const mk=(which,box)=>{ const set=which==='give'?formGive:formWant;
+    document.getElementById(box).innerHTML=CAT_ORDER.map(c=>`<button type="button" class="fchip ${set.has(c)?'on':''}" style="--cc:${CATS[c].c}" onclick="toggleFormCat('${which}','${c}')">${CATS[c].e} ${c}</button>`).join(''); };
+  mk('give','fGiveCats'); mk('want','fWantCats');
+}
+function pickFormEmoji(e){ formEmoji=e; buildFormChips(); }
+function toggleFormCat(which,c){ const set=which==='give'?formGive:formWant; set.has(c)?set.delete(c):set.add(c); buildFormChips(); }
+function submitAdd(){
+  const name=fName.value.trim();
+  if(!name){ toast('이름을 입력해 주세요 🙂'); fName.focus(); return; }
+  if(!formGive.size && !formWant.size){ toast('나눌 것 또는 받고 싶은 것을 하나 이상 골라주세요'); return; }
+  if(!editingCard && roster.some(s=>s.name===name)){ if(!confirm('같은 이름이 이미 있어요. 그래도 추가할까요?')) return; }
+  const card={ name, emoji:formEmoji,
+    give:CAT_ORDER.filter(c=>formGive.has(c)), giveText:fGiveText.value.trim()||'편하게 연락 주세요 :)',
+    want:CAT_ORDER.filter(c=>formWant.has(c)), wantText:fWantText.value.trim()||'함께 나눠요.', custom:true };
+  if(editingCard){ const old=editingCard; closeModals();   /* closeModals가 editingCard=null 처리 */
+    if(cloud.on){ Promise.resolve(cloudDel(old)).then(()=>cloudAdd(card)).then(()=>{addLog('카드 수정: '+name); toast('✏️ 수정했어요');}).catch(()=>toast('⚠ 수정 실패')); return; }
+    const idx=roster.indexOf(old); if(idx>=0) roster[idx]=card; addLog('카드 수정: '+name); rebuild(); toast('✏️ 수정했어요'); return; }
+  if(cloud.on){ closeModals(); cloudAdd(card).then(()=>{addLog('카드 추가: '+name); toast('✨ '+name+' 님 카드가 실시간으로 올라왔어요!');}).catch(()=>toast('⚠ 저장 실패 — 잠시 후 다시 시도해 주세요')); return; }
+  roster.push(card); addLog('카드 추가: '+name); rebuild(); closeModals();
+  const node=nodes.find(n=>n.s===card); if(node) select(node);
+  toast('✨ '+name+' 님의 자원 카드가 우리과 자원망에 올라왔어요!');
+}
+
+/* ===================== RAW DATA VIEW/EDIT ===================== */
+function rawString(){ return JSON.stringify(roster.map(({id,pg,...r})=>r), null, 2); }
+function openRaw(){ const a=document.getElementById('rawArea'); a.value=rawString(); a.readOnly=true; a.classList.remove('editing');
+  setRawMode(false); showModal('rawModal'); }
+function setRawMode(edit){ const m=document.getElementById('rawMode');
+  m.textContent= edit? '편집 중 — 고친 뒤 ✅ 적용' : '읽기 전용 — 누르면 편집';
+  m.className='rawmode '+(edit?'edit':'view'); }
+function enableRawEdit(){ const a=document.getElementById('rawArea'); if(a.readOnly){ a.readOnly=false; a.classList.add('editing'); setRawMode(true); a.focus(); } }
+function copyRaw(){ const a=document.getElementById('rawArea');
+  if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(a.value).then(()=>toast('📋 Raw 데이터를 복사했어요'),()=>{a.select();toast('드래그하여 복사하세요');}); }
+  else { a.select(); toast('드래그하여 복사하세요'); } }
+function applyRaw(){ const a=document.getElementById('rawArea');
+  if(cloud.on){ toast('⚠ 실시간 모드에선 일괄 교체 대신 ➕추가/📥불러오기 또는 Firebase 콘솔을 이용하세요'); return; }
+  let parsed; try{ parsed=JSON.parse(a.value); }catch(e){ toast('⚠ JSON 형식 오류 — 따옴표·콤마를 확인하세요'); return; }
+  const list=Array.isArray(parsed)?parsed:(parsed.명단||parsed.roster||[]);
+  if(!Array.isArray(list)||!list.length){ toast('⚠ 카드 배열을 찾지 못했어요'); return; }
+  if(!confirm('현재 명단을 이 내용으로 교체할까요? ('+list.length+'명)')) return;
+  roster=list.map(normalize); addLog('Raw 직접편집 적용 ('+roster.length+'명)'); rebuild(); closeModals(); toast('✅ Raw 편집을 적용했어요 ('+roster.length+'명)'); }
+
+/* ===================== EXPORT / IMPORT / SHARE ===================== */
+function snapshot(){ return {앱:APP_NAME, 버전:APP_VERSION, 빌드:APP_BUILD, 표제:'우리는 서로의 자원입니다',
+  인원:roster.length, 저장시각:new Date().toLocaleString('ko-KR'),
+  수정로그:log, 명단:roster.map(({id,pg,...r})=>r)}; }
+function exportJSON(){
+  const data=snapshot();
+  const stamp=new Date().toISOString().slice(0,16).replace(/[:T]/g,'-');
+  const b=new Blob([JSON.stringify(data,null,2)],{type:'application/json'}); const a=document.createElement('a');
+  a.href=URL.createObjectURL(b); a.download='아동복지학과_자원망_'+stamp+'.json'; a.click(); URL.revokeObjectURL(a.href);
+  addLog('파일로 내보내기 ('+roster.length+'명)');
+  toast('📤 현재 상태를 .json 파일로 저장했어요 ('+roster.length+'명, 로그 포함)');
+}
+function importJSON(ev){ const f=ev.target.files[0]; if(!f)return; const rd=new FileReader();
+  rd.onload=()=>{ try{ const d=JSON.parse(rd.result); const list=Array.isArray(d)?d:(d.명단||d.roster||[]);
+    if(!list.length){toast('불러올 카드가 없어요');return;}
+    if(cloud.on){ if(!confirm(list.length+'개 카드를 실시간 공용 명단에 올릴까요?')){return;}
+      Promise.all(list.map(c=>cloudAdd(normalize(c)))).then(()=>toast('📥 '+list.length+'개를 실시간 명단에 올렸어요')).catch(()=>toast('⚠ 일부 업로드 실패'));
+      closeModals(); return; }
+    const byName={}; roster.forEach(s=>byName[s.name]=s); list.forEach(c=>{ const nc=normalize(c); byName[nc.name]=nc; });
+    roster=Object.values(byName);
+    if(d.수정로그&&Array.isArray(d.수정로그)){ log=d.수정로그.concat(log).slice(0,300); }
+    addLog('불러오기 합침: '+f.name+' ('+list.length+'개 → 총 '+roster.length+'명)');
+    rebuild(); closeModals(); toast('📥 '+list.length+'개 카드를 합쳤어요 (총 '+roster.length+'명)'); }
+   catch(e){ toast('파일을 읽을 수 없어요'); } };
+  rd.readAsText(f); ev.target.value=''; }
+function shareLink(){
+  const json=JSON.stringify(roster.map(({id,pg,...r})=>r));
+  const code=btoa(unescape(encodeURIComponent(json)));
+  const url=location.href.split('#')[0]+'#r='+code;
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(url).then(()=>toast('🔗 현재 명단이 담긴 공유 링크를 복사했어요'),()=>prompt('이 링크를 복사하세요',url));
+  } else prompt('이 링크를 복사하세요',url);
+}
+
+/* ===================== LOG / HELP MODALS ===================== */
+function openLog(){
+  const last = log.length? new Date(log[0].t).toLocaleString('ko-KR') : '—';
+  const rows = log.map(e=>`<div class="logrow"><span class="lt">${new Date(e.t).toLocaleString('ko-KR')}</span><span class="la">${esc(e.a)}</span></div>`).join('') || '<div class="empty">아직 기록이 없어요</div>';
+  document.getElementById('logBox').innerHTML=
+    `<div class="logmeta"><div class="vv">${APP_NAME} ${APP_VERSION}</div>
+       <div class="mm">빌드 ${APP_BUILD} · 현재 참여 <b>${roster.length}명</b> · 마지막 변경 <b>${last}</b></div>
+       <div class="mm" style="margin-top:6px;color:#0e8a52">이 ‘마지막 변경’ 시각이 가장 최신인 파일이 최종본입니다.</div></div>`+rows;
+  showModal('logModal');
+}
+function openHelp(){ showModal('helpModal'); }
+
+/* ===================== MODAL MANAGER ===================== */
+const back=document.getElementById('back');
+function showModal(id){ back.classList.add('open'); document.querySelectorAll('.sheet').forEach(m=>m.classList.remove('open')); document.getElementById(id).classList.add('open'); }
+function closeModals(){ editingCard=null; back.classList.remove('open'); document.querySelectorAll('.sheet').forEach(m=>m.classList.remove('open')); }
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeModals(); });
+
+/* ===================== LEGEND / CONTROLS / PICK ===================== */
+function buildLeg(){ document.getElementById('legchips').innerHTML=CAT_ORDER.map(c=>
+  `<span class="legchip" data-c="${c}" style="background:${CATS[c].c}" onclick="toggleFilter('${c}')">${CATS[c].e} ${c}</span>`).join('');
+  if(window.innerWidth<=820){ const l=document.getElementById('legend'); l.classList.add('collapsed'); document.getElementById('legcaret').textContent='▸'; } }
+function toggleLegend(){ const l=document.getElementById('legend'); l.classList.toggle('collapsed');
+  document.getElementById('legcaret').textContent=l.classList.contains('collapsed')?'▸':'▾'; }
+function toggleFilter(c){ catFilter=(catFilter===c?null:c); refreshLeg(); }
+function refreshLeg(){ document.querySelectorAll('.legchip').forEach(el=>el.classList.toggle('dim', catFilter && el.dataset.c!==catFilter)); }
+function toggleFloat(){ floatOn=!floatOn; document.getElementById('btnFloat').classList.toggle('on',floatOn); }
+function toggleAllFlow(){ allFlow=!allFlow; document.getElementById('btnFlow').classList.toggle('on',allFlow);
+  if(allFlow&&!selected) toast('⚡ 전체 자원 흐름 (희미하게) — 친구를 누르면 그 친구 흐름만 또렷해져요'); }
+function buildPick(){
+  const sel=document.getElementById('pick'); const cur=sel.value;
+  sel.innerHTML='<option value="">— 이름 선택 —</option>';
+  roster.slice().sort((a,b)=>a.name.localeCompare(b.name,'ko')).forEach(s=>{
+    const o=document.createElement('option'); o.value=s.id; o.textContent=`${s.emoji} ${s.name}`; sel.appendChild(o); });
+  if(cur) sel.value=cur;
+}
+document.getElementById('pick').addEventListener('change',e=>{ const v=e.target.value; if(v==='') deselect(); else selectById(+v); });
+
+let hintTimer=setTimeout(hideHint,9000);
+function hideHint(){document.getElementById('hint').classList.add('hide');}
+function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),3200);}
+
+/* form input refs */
+const fName=document.getElementById('fName'), fGiveText=document.getElementById('fGiveText'),
+      fWantText=document.getElementById('fWantText'), fEmoji=document.getElementById('fEmoji');
+fName.addEventListener('keydown',e=>{ if(e.key==='Enter') submitAdd(); });
+
+/* ===================== INIT ===================== */
+function tryCloud(){ if(!cloud.on) initCloud(); }
+function init(){ loadRoster(); loadComments(); resize(); rebuild(); buildLeg(); loop(); tryCloud(); }
+window.addEventListener('fb-ready', tryCloud);   /* Firebase 모듈 준비되면 실시간 연결 */
+window.addEventListener('resize',resize);
+init();
+</script>
+</body>
+</html>
